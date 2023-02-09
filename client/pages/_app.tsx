@@ -1,10 +1,11 @@
-import '@/styles/globals.css'
 import type { AppProps, AppContext } from 'next/app';
 import App from 'next/app';
 import Head from 'next/head';
+import axios from 'axios';
+import { LOCALDOMAIN } from '@/utils';
 import type { ILayoutProps } from '@/components/layout';
 import Layout from '@/components/layout';
-import Code from '@/public/code.png';
+import '@/styles/globals.css'
 
 const MyApp = (data: AppProps & ILayoutProps) => {
   const {
@@ -30,58 +31,10 @@ const MyApp = (data: AppProps & ILayoutProps) => {
 
 MyApp.getInitialProps = async (context: AppContext) => {
   const pageProps = await App.getInitialProps(context);
+  const { data = {} } = await axios.get(`${LOCALDOMAIN}/api/layout`)
   return {
     ...pageProps,
-    navbarData: {},
-    footerData: {
-      title: "Demo",
-      linkList: [
-        {
-          title: "技术栈",
-          list: [
-            {
-              label: "react",
-            },
-            {
-              label: "typescript",
-            },
-            {
-              label: "ssr",
-            },
-            {
-              label: "nodejs",
-            },
-          ],
-        },
-        {
-          title: "了解更多",
-          list: [
-            {
-              label: "掘金",
-              link: "https://juejin.cn",
-            },
-            {
-              label: "知乎",
-              link: "https://www.zhihu.com",
-            },
-            {
-              label: "csdn",
-            },
-          ],
-        },
-        {
-          title: "联系我",
-          list: [{ label: "微信" }, { label: "QQ" }],
-        },
-      ],
-      qrCode: {
-        image: Code,
-        text: "王小白学前端",
-      },
-      copyRight: "Copyright © 2023 xxx. 保留所有权利",
-      siteNumber: "冀ICP备XXXXXXXX号-X",
-      publicNumber: "冀公网安备 xxxxxxxxxxxxxx号",
-    }
+    ...data,
   }
 }
 export default MyApp;
