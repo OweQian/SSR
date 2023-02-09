@@ -1,0 +1,58 @@
+{
+  "kind": "collectionType",
+  "collectionName": "layouts",
+  "info": {
+    "singularName": "layout",
+    "pluralName": "layouts",
+    "displayName": "layout",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Demo",
+      "required": true,
+      "unique": true
+    },
+    "copy_right": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "default": "Copyright © 2023 xxx. 保留所有权利"
+    },
+    "site_number": {
+      "type": "string",
+      "default": "冀ICP备XXXXXXXX号-X",
+      "required": true,
+      "unique": true
+    },
+    "public_number": {
+      "type": "string",
+      "default": "冀公网安备 xxxxxxxxxxxxxx号",
+      "required": true,
+      "unique": true
+    },
+    "qr_code_image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "qr_code": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "link_lists": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::link-list.link-list"
+    }
+  }
+}
