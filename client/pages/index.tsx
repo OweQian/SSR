@@ -1,4 +1,7 @@
+import {useRef, useContext, useEffect} from 'react';
 import type { NextPage } from 'next';
+import classNames from 'classnames';
+import { ThemeContext } from '@/stores/theme';
 import styles from '@/styles/Home.module.scss';
 
 interface IHomeProps {
@@ -14,9 +17,18 @@ interface IHomeProps {
 const Home: NextPage<IHomeProps> = ({
   title, description, list
 }) => {
+  const mainRef = useRef<HTMLDivElement>(null);
+  const { theme } = useContext(ThemeContext);
+  useEffect(() => {
+    mainRef.current?.classList.remove(styles.withAnimation);
+    window.requestAnimationFrame(() => {
+      mainRef.current?.classList.add(styles.withAnimation);
+    });
+  }, [theme]);
+
   return (
     <div className={styles.container}>
-      <main className={styles.main}>
+      <main className={classNames([styles.main, styles.withAnimation])} ref={mainRef}>
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.description}>{description}</p>
         <div className={styles.grid}>

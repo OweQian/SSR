@@ -2,6 +2,7 @@ import type { AppProps, AppContext } from 'next/app';
 import App from 'next/app';
 import Head from 'next/head';
 import axios from 'axios';
+import ThemeContextProvider from '@/stores/theme';
 import { LOCALDOMAIN } from '@/utils';
 import type { ILayoutProps } from '@/components/layout';
 import Layout from '@/components/layout';
@@ -21,9 +22,11 @@ const MyApp = (data: AppProps & ILayoutProps) => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout navbarData={navbarData} footerData={footerData}>
-        <Component {...pageProps} />
-      </Layout>
+      <ThemeContextProvider>
+        <Layout navbarData={navbarData} footerData={footerData}>
+          <Component {...pageProps} />
+        </Layout>
+      </ThemeContextProvider>
     </div>
 
   )

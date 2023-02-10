@@ -1,16 +1,20 @@
-import { FC } from 'react';
+import {FC, useContext} from 'react';
+import {ThemeContext} from '@/stores/theme';
+import {Themes} from '@/constants/enum';
 import styles from './index.module.scss';
-import Image from 'next/image';
-import LogoLight from '@/public/logo_light.png';
 
 export interface INavBarProps {}
 
 const NavBar: FC<INavBarProps> = ({}) => {
+  const { setTheme } = useContext(ThemeContext);
   return (
     <div className={styles.navBar}>
       <a href="http://localhost:3000/">
-        <Image src={LogoLight} alt="" width={70} height={20} />
+        <div className={styles.logoIcon} />
       </a>
+      <div className={styles.themeIcon} onClick={(): void => {
+        setTheme(localStorage.getItem('theme') === Themes.light ? Themes.dark : Themes.light);
+      }}/>
     </div>
   )
 }
