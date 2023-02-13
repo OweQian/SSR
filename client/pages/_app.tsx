@@ -3,19 +3,22 @@ import App from 'next/app';
 import Head from 'next/head';
 import axios from 'axios';
 import ThemeContextProvider from '@/stores/theme';
-import { LOCALDOMAIN } from '@/utils';
+import UserAgentProvider from '@/stores/userAgent';
+import { LOCALDOMAIN, getIsMobile } from '@/utils';
 import type { ILayoutProps } from '@/components/layout';
 import Layout from '@/components/layout';
 import '@/styles/globals.css'
 
-const MyApp = (data: AppProps & ILayoutProps) => {
+const MyApp = (data: AppProps & ILayoutProps & { isMobile: boolean }) => {
   const {
-    Component, pageProps, navbarData, footerData
+    Component, pageProps, navbarData, footerData, isMobile
   } = data;
   return (
     <div>
       <Head>
-        <title>A Demo for 官网开发实战</title>
+        <title>{`A Demo for 官网开发实战 (${
+          isMobile ? "移动端" : "pc端"
+        })`}</title>
         <meta
           name="description"
           content="A Demo for 官网开发实战"
@@ -23,9 +26,11 @@ const MyApp = (data: AppProps & ILayoutProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ThemeContextProvider>
-        <Layout navbarData={navbarData} footerData={footerData}>
-          <Component {...pageProps} />
-        </Layout>
+        <UserAgentProvider>
+          <Layout navbarData={navbarData} footerData={footerData}>
+            <Component {...pageProps} />
+          </Layout>
+        </UserAgentProvider>
       </ThemeContextProvider>
     </div>
 
@@ -38,6 +43,7 @@ MyApp.getInitialProps = async (context: AppContext) => {
   return {
     ...pageProps,
     ...data,
+    isMobile: getIsMobile(context),
   }
 }
 export default MyApp;
