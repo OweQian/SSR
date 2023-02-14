@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const path = require('path');
+const semi = require('@douyinfe/semi-next').default({});
 
-const nextConfig = {
+const nextConfig = semi({
   reactStrictMode: true,
   swcMinify: true,
   images: {
@@ -14,6 +15,6 @@ const nextConfig = {
     };
     return config;
   }
-}
+});
 
 module.exports = nextConfig

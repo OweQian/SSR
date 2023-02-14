@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "article_infos",
+  "info": {
+    "singularName": "article-info",
+    "pluralName": "article-infos",
+    "displayName": "ArticleInfo",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "author": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "description": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "createTime": {
+      "required": true,
+      "unique": false,
+      "type": "date"
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}

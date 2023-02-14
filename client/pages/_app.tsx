@@ -33,7 +33,6 @@ const MyApp = (data: AppProps & ILayoutProps & { isMobile: boolean }) => {
         </UserAgentProvider>
       </ThemeContextProvider>
     </div>
-
   )
 }
 
