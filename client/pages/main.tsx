@@ -1,18 +1,15 @@
-import {useContext, useEffect, useRef, useState} from 'react';
+import {useRef, useContext, useEffect, useState} from 'react';
 import axios from 'axios';
-import type {NextPage} from 'next';
-import {Pagination} from '@douyinfe/semi-ui';
+import type { NextPage } from 'next';
+import { Pagination } from '@douyinfe/semi-ui';
 import classNames from 'classnames';
-import {ThemeContext} from '@/stores/theme';
-import {useTranslation} from 'next-i18next';
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations';
+import { ThemeContext } from '@/stores/theme';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import styles from '@/styles/Home.module.scss';
 import {LOCALDOMAIN} from "@/utils";
 import {IArticleIntroduction} from "@/pages/api/articleIntroduction";
-import {LanguageContext} from "@/stores/language";
-import {useRouter} from "next/router";
 
-interface IHomeProps {
+interface IMainProps {
   title: string;
   description: string;
   articles: {
@@ -25,16 +22,12 @@ interface IHomeProps {
   };
 }
 
-const Home: NextPage<IHomeProps> = ({
-  title, description, articles
-}) => {
-  const { i18n } = useTranslation();
-  const router = useRouter();
-  const { locale } = router;
+const Main: NextPage<IMainProps> = ({
+                                      title, description, articles
+                                    }) => {
   const [content, setContent] = useState(articles);
   const mainRef = useRef<HTMLDivElement>(null);
   const { theme } = useContext(ThemeContext);
-  const { language } = useContext(LanguageContext);
   useEffect(() => {
     mainRef.current?.classList.remove(styles.withAnimation);
     window.requestAnimationFrame(() => {
@@ -42,10 +35,6 @@ const Home: NextPage<IHomeProps> = ({
     });
   }, [theme]);
 
-  useEffect(() => {
-    i18n?.changeLanguage(locale);
-    console.warn(locale)
-  }, [language, locale])
   return (
     <div className={styles.container}>
       <main className={classNames([styles.main, styles.withAnimation])} ref={mainRef}>
@@ -94,7 +83,7 @@ const Home: NextPage<IHomeProps> = ({
   )
 }
 
-export const getServerSideProps = async ({ locale }: { locale: string }) => {
+Main.getInitialProps = async (context) => {
   const {
     data: {
       title, description,
@@ -104,25 +93,21 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => {
     data: {
       list: listData, total,
     }} = await axios.post(`${LOCALDOMAIN}/api/articleIntroduction`, {
-      pageNo: 1,
-      pageSize: 6,
-    })
+    pageNo: 1,
+    pageSize: 6,
+  })
   return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common', 'footer', 'header', 'main'])),
-      title,
-      description,
-      articles: {
-        total,
-        list: listData?.map((item: IArticleIntroduction) => ({
-          label: item.label,
-          info: item.info,
-          link: `${LOCALDOMAIN}/article/${item.articleId}`,
-        }))
-      },
-    }
-
+    title,
+    description,
+    articles: {
+      total,
+      list: listData?.map((item: IArticleIntroduction) => ({
+        label: item.label,
+        info: item.info,
+        link: `${LOCALDOMAIN}/article/${item.articleId}`,
+      }))
+    },
   };
 }
 
-export default Home;
+export default Main;

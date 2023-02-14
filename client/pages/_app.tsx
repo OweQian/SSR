@@ -4,8 +4,10 @@ import Head from 'next/head';
 import axios from 'axios';
 import ThemeContextProvider from '@/stores/theme';
 import UserAgentProvider from '@/stores/userAgent';
+import LanguageContextProvider from '@/stores/language';
 import { LOCALDOMAIN, getIsMobile } from '@/utils';
 import type { ILayoutProps } from '@/components/layout';
+import { appWithTranslation } from 'next-i18next';
 import Layout from '@/components/layout';
 import '@/styles/globals.css'
 
@@ -25,13 +27,15 @@ const MyApp = (data: AppProps & ILayoutProps & { isMobile: boolean }) => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ThemeContextProvider>
-        <UserAgentProvider>
-          <Layout navbarData={navbarData} footerData={footerData}>
-            <Component {...pageProps} />
-          </Layout>
-        </UserAgentProvider>
-      </ThemeContextProvider>
+      <LanguageContextProvider>
+        <ThemeContextProvider>
+          <UserAgentProvider>
+            <Layout navbarData={navbarData} footerData={footerData}>
+              <Component {...pageProps} />
+            </Layout>
+          </UserAgentProvider>
+        </ThemeContextProvider>
+      </LanguageContextProvider>
     </div>
   )
 }
@@ -45,4 +49,4 @@ MyApp.getInitialProps = async (context: AppContext) => {
     isMobile: getIsMobile(context),
   }
 }
-export default MyApp;
+export default appWithTranslation(MyApp);
