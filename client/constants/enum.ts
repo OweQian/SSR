@@ -12,5 +12,5 @@ export enum Environment {
 
 export enum Language {
   ch = "zh-CN",
-  en = "en",
+  en = "en_US",
 }
