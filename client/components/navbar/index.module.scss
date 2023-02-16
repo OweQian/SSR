@@ -27,6 +27,11 @@
     color: var(--primary-color);
     font-size: 0.875rem;
 
+    .language {
+      margin-right: 1rem;
+      cursor: pointer;
+    }
+
     .popupText {
       margin-right: 1rem;
       cursor: pointer;

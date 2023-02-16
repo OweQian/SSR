@@ -19,6 +19,17 @@ a {
   box-sizing: border-box;
 }
 
+.forbidScroll {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.pcForbidScroll {
+  width: calc(100% - 1rem);
+  height: 100vh;
+  overflow: hidden;
+}
+
 html[data-theme="dark"] {
   --primary-color: #ffffff;
   --primary-background-color: rgba(14, 14, 14, 1);
@@ -28,6 +39,9 @@ html[data-theme="dark"] {
   --link-color: #34a8eb;
   --navbar-icon: url('../public/logo_dark.png');
   --theme-icon: url('../public/theme_dark.png');
+  --popup-close-icon: url('../public/close.png');
+  --popup-close-hover-background-color: #353535;
+  --popup-content-background-color: #1f1f1f;
 }
 
 html[data-theme="light"] {
@@ -39,4 +53,7 @@ html[data-theme="light"] {
   --link-color: #0070f3;
   --navbar-icon: url('../public/logo_light.png');
   --theme-icon: url('../public/theme_light.png');
+  --popup-close-icon: url('../public/close_light.png');
+  --popup-close-hover-background-color: #f5f5f5;
+  --popup-content-background-color: #f4f5f5;
 }
