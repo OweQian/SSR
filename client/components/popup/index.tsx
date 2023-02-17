@@ -69,4 +69,5 @@ const Popup = forwardRef<IPopupRef, IPopupProps>(({children}, ref) => {
   ) : null;
 });
 
+Popup.displayName = 'Popup'
 export default Popup;

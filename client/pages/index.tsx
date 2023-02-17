@@ -8,6 +8,7 @@ import {useTranslation} from 'next-i18next';
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations';
 import styles from '@/styles/Home.module.scss';
 import {LOCALDOMAIN} from "@/utils";
+import {IDeviceInfoProps} from "@/pages/_app";
 import {IArticleIntroduction} from "@/pages/api/articleIntroduction";
 import {LanguageContext} from "@/stores/language";
 import {useRouter} from "next/router";
@@ -25,8 +26,8 @@ interface IHomeProps {
   };
 }
 
-const Home: NextPage<IHomeProps> = ({
-  title, description, articles
+const Home: NextPage<IHomeProps & IDeviceInfoProps> = ({
+  title, description, articles, isSupportWebp
 }) => {
   const { i18n } = useTranslation();
   const router = useRouter();
@@ -49,6 +50,10 @@ const Home: NextPage<IHomeProps> = ({
   return (
     <div className={styles.container}>
       <main className={classNames([styles.main, styles.withAnimation])} ref={mainRef}>
+        <div className={classNames({
+          [styles.header]: true,
+          [styles.headerWebp]: isSupportWebp,
+        })} />
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.description}>{description}</p>
         <div className={styles.grid}>
